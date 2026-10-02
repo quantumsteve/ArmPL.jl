@@ -6,7 +6,7 @@ function __init__()
     # check if <LD_LIBRARY_PATH> is set AND
     # check if <libarmpl_ilp64_mp.so> is present in <LD_LIBRARY_PATH>:
   if "LD_LIBRARY_PATH" in keys(ENV) && 
-    isfile(joinpath(ENV["LD_LIBRARY_PATH"], "libarmpl_ilp64_mp.so"))
+    mapreduce(x -> isfile(joinpath(x, "libarmpl_ilp64_mp.so")), |, split(ENV["LD_LIBRARY_PATH"], ":"))
     
     # link <libarmpl_ilp64_mp.so> instead of default libblas.so; AND
     # clear out all previous mappings before setting new ones 
